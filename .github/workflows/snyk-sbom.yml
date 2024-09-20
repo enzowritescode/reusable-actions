@@ -1,4 +1,11 @@
-on: workflow_call
+on:
+  workflow_call:
+    inputs:
+      is_mobile:
+        description: 'Is a mobile repository'
+        default: false
+        required: false
+        type: boolean
 
 permissions:
   contents: write
@@ -14,6 +21,12 @@ jobs:
         uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
         with:
           node-version: '22.6.0'
+
+      - name: sbom/setup-gradle
+        if: ${{ inputs.is_mobile }}
+        uses: gradle/actions/setup-gradle@d156388eb19639ec20ade50009f3d199ce1e2808 # v4.1.0
+        with:
+          gradle-version: '8.10.1'
 
       - name: sbom/install-snyk
         run: npm install -g snyk@1.1293.0
