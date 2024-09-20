@@ -32,7 +32,7 @@ jobs:
         run: npm install -g snyk@1.1293.0
 
       - name: sbom/generate
-        run: snyk sbom --format=cyclonedx1.5+json --all-projects > sbom.json
+        run: snyk sbom --format=cyclonedx1.5+json --all-projects -d
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
